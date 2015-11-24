@@ -10,12 +10,14 @@
       <?if $(var.Platform) = x64 ?>
       <?ifdef Debug ?>
       <MergeRef Id="VC140_DebugCRT_x64" />
+      <ComponentRef Id="ucrtbased_x64" />
       <?else ?>
       <MergeRef Id="VC140_CRT_x64" />
       <?endif ?>
       <?elseif $(var.Platform) = x86 ?>
       <?ifdef Debug ?>
       <MergeRef Id="VC140_DebugCRT_x86"/>
+      <ComponentRef Id="ucrtbased_x86" />
       <?else ?>
       <MergeRef Id="VC140_CRT_x86"/>
       <?endif ?>
@@ -28,12 +30,22 @@
       <?if $(var.Platform) = x64 ?>
       <?ifdef Debug ?>
       <Merge Id="VC140_DebugCRT_x64" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_DebugCRT_x64.msm" DiskId="1" Language="0" />
+      <Directory Id="System64Folder" Name="System64Folder">
+        <Component Id="ucrtbased_x64" Guid="{66D25933-305D-AC01-DDE8-3E561CE54B0E}"> <!-- Same component GUID used by VS2015 installer for this file. -->
+          <File Id="ucrtbased_x64" Name="ucrtbased.dll" Source="$(env.ProgramFiles(x86))\Windows Kits\10\bin\x64\ucrt\ucrtbased.dll" KeyPath="yes" Checksum="yes" />
+        </Component>
+      </Directory>
       <?else ?>
       <Merge Id="VC140_CRT_x64" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_CRT_x64.msm" DiskId="1" Language="0" />
       <?endif ?>
       <?elseif $(var.Platform) = x86 ?>
       <?ifdef Debug ?>
       <Merge Id="VC140_DebugCRT_x86" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_DebugCRT_x86.msm" DiskId="1" Language="0" />
+      <Directory Id="SystemFolder" Name="SystemFolder">
+        <Component Id="ucrtbased_x86" Guid="{218B840B-ED23-4743-AF46-22B3A636DA74}"> <!-- See ucrtbased_x64 -->
+          <File Id="ucrtbased_x86" Name="ucrtbased.dll" Source="$(env.ProgramFiles(x86))\Windows Kits\10\bin\x86\ucrt\ucrtbased.dll" KeyPath="yes" Checksum="yes" />
+        </Component>
+      </Directory>
       <?else ?>
       <Merge Id="VC140_CRT_x86" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_CRT_x86.msm" DiskId="1" Language="0" />
       <?endif ?>
