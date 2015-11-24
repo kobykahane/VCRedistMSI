@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="Visual C++ 2015 Redist" Language="1033" Version="1.0.0.0" Manufacturer="Koby Kahane" UpgradeCode="624b40ab-877e-448d-b7be-8414e22d4661">
+    <Package InstallerVersion="450" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="VCRedist" Title="Visual C++ Redist" AllowAdvertise="no" Level="1">
+      <?if $(var.Platform) = x64 ?>
+      <?ifdef Debug ?>
+      <MergeRef Id="VC140_DebugCRT_x64" />
+      <?else ?>
+      <MergeRef Id="VC140_CRT_x64" />
+      <?endif ?>
+      <?elseif $(var.Platform) = x86 ?>
+      <?ifdef Debug ?>
+      <MergeRef Id="VC140_DebugCRT_x86"/>
+      <?else ?>
+      <MergeRef Id="VC140_CRT_x86"/>
+      <?endif ?>
+      <?endif ?>
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <?if $(var.Platform) = x64 ?>
+      <?ifdef Debug ?>
+      <Merge Id="VC140_DebugCRT_x64" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_DebugCRT_x64.msm" DiskId="1" Language="0" />
+      <?else ?>
+      <Merge Id="VC140_CRT_x64" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_CRT_x64.msm" DiskId="1" Language="0" />
+      <?endif ?>
+      <?elseif $(var.Platform) = x86 ?>
+      <?ifdef Debug ?>
+      <Merge Id="VC140_DebugCRT_x86" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_DebugCRT_x86.msm" DiskId="1" Language="0" />
+      <?else ?>
+      <Merge Id="VC140_CRT_x86" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_CRT_x86.msm" DiskId="1" Language="0" />
+      <?endif ?>
+      <?endif ?>
+    </Directory>
+  </Fragment>
+
+</Wix>
