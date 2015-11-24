@@ -31,7 +31,9 @@
       <?ifdef Debug ?>
       <Merge Id="VC140_DebugCRT_x64" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_DebugCRT_x64.msm" DiskId="1" Language="0" />
       <Directory Id="System64Folder" Name="System64Folder">
-        <Component Id="ucrtbased_x64" Guid="{66D25933-305D-AC01-DDE8-3E561CE54B0E}"> <!-- Same component GUID used by VS2015 installer for this file. -->
+        <!-- ucrtbased.dll is installed by the Windows SDK Universal CRT Tools x86 and x64 MSIs. An identical component GUID is used
+             to make this component shared with the one installed by that package. -->
+        <Component Id="ucrtbased_x64" Guid="{A32B2692-A1C0-A67B-5FBF-0D4FE6DB1BCB}">
           <File Id="ucrtbased_x64" Name="ucrtbased.dll" Source="$(env.ProgramFiles(x86))\Windows Kits\10\bin\x64\ucrt\ucrtbased.dll" KeyPath="yes" Checksum="yes" />
         </Component>
       </Directory>
@@ -42,7 +44,7 @@
       <?ifdef Debug ?>
       <Merge Id="VC140_DebugCRT_x86" SourceFile="$(env.CommonProgramFiles(x86))\Merge Modules\Microsoft_VC140_DebugCRT_x86.msm" DiskId="1" Language="0" />
       <Directory Id="SystemFolder" Name="SystemFolder">
-        <Component Id="ucrtbased_x86" Guid="{218B840B-ED23-4743-AF46-22B3A636DA74}"> <!-- See ucrtbased_x64 -->
+        <Component Id="ucrtbased_x86" Guid="{B048B812-32DE-3474-FA64-223B6A63AD47}"> <!-- See ucrtbased_x64 -->
           <File Id="ucrtbased_x86" Name="ucrtbased.dll" Source="$(env.ProgramFiles(x86))\Windows Kits\10\bin\x86\ucrt\ucrtbased.dll" KeyPath="yes" Checksum="yes" />
         </Component>
       </Directory>
